@@ -14,9 +14,7 @@
 
   * [Dataset](quickstart/dataset.md)
 
-  * [Coding](quickstart/coding.md)
-
-  * [Running](quickstart/running.md)
+  * [Programming](quickstart/programming.md)
 
 * [Demo](demo/README.md)
 

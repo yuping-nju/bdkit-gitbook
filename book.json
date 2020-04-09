@@ -5,13 +5,6 @@
     "generator": "site",
     "isbn": "",
     "links": {
-        "sharing": {
-            "all": null,
-            "facebook": null,
-            "google": null,
-            "twitter": null,
-            "weibo": null
-        },
         "sidebar": {
             "ICS Homepage": "http://ics.nju.edu.cn"
         }
@@ -33,8 +26,62 @@
     "plugins": [
         "expandable-chapters",
         "theme-comscore",
-        "lightbox"
+        "lightbox",
+        "-sharing", "sharing-plus",
+        "anchor-navigation-ex",
+        "tbfed-pagefooter"
     ],
+    "pluginsConfig": {
+        "sharing": {
+           "douban": false,
+           "facebook": false,
+           "google": false,
+           "hatenaBookmark": false,
+           "instapaper": false,
+           "line": false,
+           "linkedin": false,
+           "messenger": false,
+           "pocket": false,
+           "qq": false,
+           "qzone": true,
+           "stumbleupon": false,
+           "twitter": false,
+           "viber": false,
+           "vk": false,
+           "weibo": true,
+           "whatsapp": false,
+           "all": [
+               "facebook", "google", "twitter",
+               "weibo"
+           ]
+       },
+       "anchor-navigation-ex": {
+            "showLevel": false,
+            "associatedWithSummary": true,
+            "printLog": false,
+            "multipleH1": true,
+            "mode": "float",
+            "showGoTop":true,
+            "float": {
+                "floatIcon": "fa fa-navicon",
+               "showLevelIcon": true,
+               "level1Icon": "fa fa-hand-o-right",
+              "level2Icon": "fa fa-hand-o-right",
+              "level3Icon": "fa fa-hand-o-right"
+            },
+            "pageTop": {
+               "showLevelIcon": true,
+             "level1Icon": "fa fa-hand-o-right",
+             "level2Icon": "fa fa-hand-o-right",
+            "level3Icon": "fa fa-hand-o-right"
+            }
+        },
+        "tbfed-pagefooter": {
+            "copyright":"Copyright ICS@NJU",
+            "modify_label": "该文件修订时间：",
+            "modify_format": "YYYY-MM-DD HH:mm:ss"
+        }
+    },
     "title": "BDKit GitBook",
     "variables": {}
 }
