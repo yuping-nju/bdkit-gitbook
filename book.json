@@ -30,7 +30,11 @@
         "pageNumbers": false,
         "paperSize": "a4"
     },
-    "plugins": [],
+    "plugins": [
+        "expandable-chapters",
+        "theme-comscore",
+        "lightbox"
+    ],
     "title": "BDKit GitBook",
     "variables": {}
 }
