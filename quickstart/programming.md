@@ -5,17 +5,17 @@
 ### 在Vscode中编写和运行程序
 
 1. 点击图标访问Master节点的Vscode容器。
-![Homepage](../images/open-vs.png "打开Vscode")
+![Homepage](../images/open-vscode.png "打开Vscode")
 
 
 2. 在workspace中可以看到共享区中的数据集和从Git仓库中clone的代码。
-![Homepage](../images/vscode3.png "Vscode Workspace")
+![Homepage](../images/vscode-ws.png "Vscode Workspace")
 
 3. 在Vscode Terminal中将数据集上传至HDFS并执行程序。
-![Homepage](../images/vscode4.png "Upload Dataset and Execution")
+![Homepage](../images/vscode-terminal.png "Hadoop操作")
 
 4. 程序执行成功后将结果文件从HDFS下载至workspace。
-![Homepage](../images/vscode5.png "Download Result")
+![Homepage](../images/vscode-result.png "查看执行结果")
 
 5. 在“工作区—监控”页面可以监控集群状态，查看任务日志等。
 ![Homepage](../images/yarn-rm.png "查看任务执行情况")
