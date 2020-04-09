@@ -7,7 +7,6 @@
 1. 点击图标访问Master节点的Vscode容器。
 ![Homepage](../images/open-vscode.png "打开Vscode")
 
-
 2. 在workspace中可以看到共享区中的数据集和从Git仓库中clone的代码。
 ![Homepage](../images/vscode-ws.png "Vscode Workspace")
 
