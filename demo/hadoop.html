@@ -33,6 +33,10 @@
                 
             
                 
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-code/plugin.css">
+                
+            
+                
                 <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
                 
             
@@ -105,7 +109,7 @@
     
         
         <li>
-            <a href="http://ics.nju.edu.cn" target="_blank" class="custom-link">ICS Homepage</a>
+            <a href="http://ics.nju.edu.cn/bdkit" target="_blank" class="custom-link">BDKit Homepage</a>
         </li>
     
     
@@ -344,9 +348,111 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <html><head></head><body><div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#hadoop-demo"><b></b>Hadoop Demo</a></li></ul></div><a href="#hadoop-demo" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="hadoop-demo"><a name="hadoop-demo" class="anchor-navigation-ex-anchor" href="#hadoop-demo"><i class="fa fa-link" aria-hidden="true"></i></a>Hadoop Demo</h1>
+                                <html><head></head><body><div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#hadoop-mapreduce-demo"><b></b>Hadoop MapReduce Demo</a></li></ul></div><a href="#hadoop-mapreduce-demo" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="hadoop-mapreduce-demo"><a name="hadoop-mapreduce-demo" class="anchor-navigation-ex-anchor" href="#hadoop-mapreduce-demo"><i class="fa fa-link" aria-hidden="true"></i></a>Hadoop MapReduce Demo</h1>
+<ul>
+<li>&#x7F16;&#x5199;Word Count&#x4EE3;&#x7801;</li>
+</ul>
+<pre><code class="lang-java"><span class="hljs-keyword">import</span> java.io.IOException;
+<span class="hljs-keyword">import</span> java.util.StringTokenizer;
+
+<span class="hljs-keyword">import</span> org.apache.hadoop.conf.Configuration;
+<span class="hljs-keyword">import</span> org.apache.hadoop.fs.Path;
+<span class="hljs-keyword">import</span> org.apache.hadoop.io.IntWritable;
+<span class="hljs-keyword">import</span> org.apache.hadoop.io.Text;
+<span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.Job;
+<span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.Mapper;
+<span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.Reducer;
+<span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+<span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+<span class="hljs-keyword">import</span> org.apache.hadoop.util.GenericOptionsParser;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">WordCount</span> </span>{
+
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TokenizerMapper</span> 
+       <span class="hljs-keyword">extends</span> <span class="hljs-title">Mapper</span>&lt;<span class="hljs-title">Object</span>, <span class="hljs-title">Text</span>, <span class="hljs-title">Text</span>, <span class="hljs-title">IntWritable</span>&gt;</span>{
+
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> IntWritable one = <span class="hljs-keyword">new</span> IntWritable(<span class="hljs-number">1</span>);
+    <span class="hljs-keyword">private</span> Text word = <span class="hljs-keyword">new</span> Text();
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">map</span><span class="hljs-params">(Object key, Text value, Context context
+                    )</span> <span class="hljs-keyword">throws</span> IOException, InterruptedException </span>{
+      StringTokenizer itr = <span class="hljs-keyword">new</span> StringTokenizer(value.toString());
+      <span class="hljs-keyword">while</span> (itr.hasMoreTokens()) {
+        word.set(itr.nextToken());
+        context.write(word, one);
+      }
+    }
+  }
+
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IntSumReducer</span> 
+       <span class="hljs-keyword">extends</span> <span class="hljs-title">Reducer</span>&lt;<span class="hljs-title">Text</span>,<span class="hljs-title">IntWritable</span>,<span class="hljs-title">Text</span>,<span class="hljs-title">IntWritable</span>&gt; </span>{
+    <span class="hljs-keyword">private</span> IntWritable result = <span class="hljs-keyword">new</span> IntWritable();
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reduce</span><span class="hljs-params">(Text key, Iterable&lt;IntWritable&gt; values, 
+                       Context context
+                       )</span> <span class="hljs-keyword">throws</span> IOException, InterruptedException </span>{
+      <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;
+      <span class="hljs-keyword">for</span> (IntWritable val : values) {
+        sum += val.get();
+      }
+      result.set(sum);
+      context.write(key, result);
+    }
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>{
+    Configuration conf = <span class="hljs-keyword">new</span> Configuration();
+    String[] otherArgs = <span class="hljs-keyword">new</span> GenericOptionsParser(conf, args).getRemainingArgs();
+    <span class="hljs-keyword">if</span> (otherArgs.length &lt; <span class="hljs-number">2</span>) {
+      System.err.println(<span class="hljs-string">&quot;Usage: wordcount &lt;in&gt; [&lt;in&gt;...] &lt;out&gt;&quot;</span>);
+      System.exit(<span class="hljs-number">2</span>);
+    }
+    Job job = Job.getInstance(conf, <span class="hljs-string">&quot;word count&quot;</span>);
+    job.setJarByClass(WordCount.class);
+    job.setMapperClass(TokenizerMapper.class);
+    job.setCombinerClass(IntSumReducer.class);
+    job.setReducerClass(IntSumReducer.class);
+    job.setOutputKeyClass(Text.class);
+    job.setOutputValueClass(IntWritable.class);
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; otherArgs.length - <span class="hljs-number">1</span>; ++i) {
+      FileInputFormat.addInputPath(job, <span class="hljs-keyword">new</span> Path(otherArgs[i]));
+    }
+    FileOutputFormat.setOutputPath(job,
+      <span class="hljs-keyword">new</span> Path(otherArgs[otherArgs.length - <span class="hljs-number">1</span>]));
+    System.exit(job.waitForCompletion(<span class="hljs-keyword">true</span>) ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>);
+  }
+}
+</code></pre>
+<ul>
+<li>&#x7F16;&#x8BD1;&#x4EE3;&#x7801;&#xFF0C;&#x6253;&#x5305;&#x4E3A;Jar</li>
+</ul>
+<pre><code>$ javac -classpath %CLASSPATH% WordCount.java
+$ jar cf wc.jar WordCount*.class
+</code></pre><ul>
+<li>&#x521B;&#x5EFA;&#x672C;&#x5730;&#x6587;&#x4EF6;HDFS</li>
+</ul>
+<pre><code>$ mkdir input
+$ echo &quot;Hello Docker&quot; &gt;input/file2.txt
+$ echo &quot;Hello Hadoop&quot; &gt;input/file1.txt
+</code></pre><ul>
+<li>&#x4E0A;&#x4F20;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x5230;HDFS</li>
+</ul>
+<pre><code>$ hadoop fs -mkdir -p input
+$ hdfs dfs -put ./input/* input
+</code></pre><ul>
+<li>&#x8FD0;&#x884C;Word Count&#x7A0B;&#x5E8F;</li>
+</ul>
+<pre><code>$ hadoop jar wc.jar WordCount input output
+</code></pre><ul>
+<li>&#x67E5;&#x770B;&#x8F93;&#x51FA;</li>
+</ul>
+<pre><code>$ hadoop fs -cat output/part-r-00000
+Docker  1
+Hadoop  1
+Hello   2
+</code></pre><p><a href="../images/hadoop-mr-out.png" data-lightbox="8ea19567-cc18-48c6-a311-27f666d284ec" data-title="MapReduce Output"><img src="../images/hadoop-mr-out.png" alt="MapReduce Output"></a></p>
 <footer class="page-footer"><span class="copyright">Copyright ICS@NJU all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
-2020-04-09 22:35:44
+2020-04-10 22:33:42
 </span></footer></body></html>
                                 
                                 </section>
@@ -390,7 +496,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Hadoop","level":"1.4.1","depth":2,"next":{"title":"Spark","level":"1.4.2","depth":2,"path":"demo/spark.md","ref":"demo/spark.md","articles":[]},"previous":{"title":"Demo","level":"1.4","depth":1,"path":"demo/README.md","ref":"demo/README.md","articles":[{"title":"Hadoop","level":"1.4.1","depth":2,"path":"demo/hadoop.md","ref":"demo/hadoop.md","articles":[]},{"title":"Spark","level":"1.4.2","depth":2,"path":"demo/spark.md","ref":"demo/spark.md","articles":[]},{"title":"Hive","level":"1.4.3","depth":2,"path":"demo/hive.md","ref":"demo/hive.md","articles":[]},{"title":"HBase","level":"1.4.4","depth":2,"path":"demo/hbase.md","ref":"demo/hbase.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","theme-comscore","lightbox","-sharing","sharing-plus","anchor-navigation-ex","tbfed-pagefooter","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright ICS@NJU","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"livereload":{},"search":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"printLog":false,"showGoTop":true,"showLevel":false},"lightbox":{"jquery":true,"sameUuid":false},"theme-comscore":{},"sharing":{"qq":false,"all":["facebook","google","twitter","weibo"],"douban":false,"facebook":false,"weibo":true,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":false,"messenger":false,"line":false,"vk":false,"pocket":false,"google":false,"viber":false,"stumbleupon":false,"qzone":true,"linkedin":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","author":"Copyright ICS@NJU","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"BDKit GitBook","links":{"sidebar":{"ICS Homepage":"http://ics.nju.edu.cn"}},"gitbook":"*","description":"BDKit GitBook","extension":null},"file":{"path":"demo/hadoop.md","mtime":"2020-04-09T14:35:44.533Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-09T14:43:27.192Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Hadoop","level":"1.4.1","depth":2,"next":{"title":"Spark","level":"1.4.2","depth":2,"path":"demo/spark.md","ref":"demo/spark.md","articles":[]},"previous":{"title":"Demo","level":"1.4","depth":1,"path":"demo/README.md","ref":"demo/README.md","articles":[{"title":"Hadoop","level":"1.4.1","depth":2,"path":"demo/hadoop.md","ref":"demo/hadoop.md","articles":[]},{"title":"Spark","level":"1.4.2","depth":2,"path":"demo/spark.md","ref":"demo/spark.md","articles":[]},{"title":"Hive","level":"1.4.3","depth":2,"path":"demo/hive.md","ref":"demo/hive.md","articles":[]},{"title":"HBase","level":"1.4.4","depth":2,"path":"demo/hbase.md","ref":"demo/hbase.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","theme-comscore","lightbox","-sharing","sharing-plus","anchor-navigation-ex","tbfed-pagefooter","code","hide-element"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright ICS@NJU","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"search":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"printLog":false,"showGoTop":true,"showLevel":false},"lightbox":{"jquery":true,"sameUuid":false},"theme-comscore":{},"sharing":{"qq":false,"all":["facebook","google","twitter","weibo"],"douban":false,"facebook":false,"weibo":true,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":false,"messenger":false,"line":false,"vk":false,"pocket":false,"google":false,"viber":false,"stumbleupon":false,"qzone":true,"linkedin":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","author":"Copyright ICS@NJU","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"BDKit GitBook","links":{"sidebar":{"BDKit Homepage":"http://ics.nju.edu.cn/bdkit"}},"gitbook":"*","description":"BDKit GitBook","extension":null},"file":{"path":"demo/hadoop.md","mtime":"2020-04-10T14:33:42.841Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-10T15:09:20.808Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
@@ -412,7 +518,11 @@
         
     
         
-        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        <script src="../gitbook/gitbook-plugin-code/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-hide-element/plugin.js"></script>
         
     
         
