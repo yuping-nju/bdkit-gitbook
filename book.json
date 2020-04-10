@@ -6,7 +6,7 @@
     "isbn": "",
     "links": {
         "sidebar": {
-            "ICS Homepage": "http://ics.nju.edu.cn"
+            "BDKit Homepage": "http://ics.nju.edu.cn/bdkit"
         }
     },
     "output": null,
@@ -30,7 +30,8 @@
         "-sharing", "sharing-plus",
         "anchor-navigation-ex",
         "tbfed-pagefooter",
-        "code"
+        "code",
+        "hide-element"
     ],
     "pluginsConfig": {
         "sharing": {
@@ -84,6 +85,9 @@
         },
         "code": {
             "copyButtons": true
+        },
+        "hide-element": {
+            "elements": [".gitbook-link"]
         }
     },
     "title": "BDKit GitBook",
