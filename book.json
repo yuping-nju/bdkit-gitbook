@@ -29,7 +29,8 @@
         "lightbox",
         "-sharing", "sharing-plus",
         "anchor-navigation-ex",
-        "tbfed-pagefooter"
+        "tbfed-pagefooter",
+        "code"
     ],
     "pluginsConfig": {
         "sharing": {
@@ -80,6 +81,9 @@
             "copyright":"Copyright ICS@NJU",
             "modify_label": "该文件修订时间：",
             "modify_format": "YYYY-MM-DD HH:mm:ss"
+        },
+        "code": {
+            "copyButtons": true
         }
     },
     "title": "BDKit GitBook",
