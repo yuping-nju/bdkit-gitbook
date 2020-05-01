@@ -1,6 +1,37 @@
 # Hadoop MapReduce Demo
 
-- 编写Word Count代码
+- 创建Maven项目 (推荐在Vscode里用Maven管理Java项目) 
+
+   - pom.xml片段，添加相关依赖包（**版本仅供参考**）
+
+```xml
+    <!-- https://mvnrepository.com/artifact/commonslogging/commons-logging -->
+    <dependency>
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.1.3</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-common -->
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-common</artifactId>
+      <version>2.7.4</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-hdfs</artifactId>
+      <version>2.7.4</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client -->
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-client</artifactId>
+      <version>2.7.4</version>
+    </dependency>
+
+```
+
+- 编写Word Count代码 
 
 ```java
 import java.io.IOException;
@@ -75,14 +106,13 @@ public class WordCount {
 }
 ```
 
-- 编译代码，打包为Jar
+- 执行mvn package，编译并打包
 
 ```
-$ javac -classpath %CLASSPATH% WordCount.java
-$ jar cf wc.jar WordCount*.class
+$ mvn package
 ```
 
-- 创建本地文件HDFS
+- 创建本地文件用于测试
 
 ```
 $ mkdir input
@@ -101,7 +131,7 @@ $ hdfs dfs -put ./input/* input
 - 运行Word Count程序
 
 ```
-$ hadoop jar wc.jar WordCount input output
+$ hadoop jar target/wordcount-1.0.jar WordCount input output
 ```
 
 - 查看输出
@@ -112,4 +142,4 @@ Docker  1
 Hadoop  1
 Hello   2
 ```
-![MapReduce Output](../images/hadoop-mr-out.png "查看输出")
+![MapReduce Output](../images/vscode-mr-java4.png "查看输出")

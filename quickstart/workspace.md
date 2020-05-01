@@ -12,8 +12,7 @@
 ![Select Image](../images/image-sel.png "选择镜像")
 
 3. 在对话框中对集群进行配置。slave节点数、Git仓库地址、数据集均为必填项。数据集可从共享区的数据集中选择。
-![Image Configuration](../images/cluster-config1.png "配置集群")
-![Image Configuration](../images/cluster-config3.png "配置集群")
+![Image Configuration](../images/cluster-config.png "配置集群")
 
 4. 创建后页面显示集群基本情况。集群Status为“等待中”表示正在创建，创建成功后Status为“就绪”（<font color="red">需要主动刷新</font>）。
 ![Cluster Waiting](../images/cluster-waiting.png "集群正在创建")
@@ -21,7 +20,7 @@
 
 ### 集群概况
 
-1. 集群创建成功后，概况页面由两个卡片组成。上面为集群的基本信息和对集群的基本操作。卡片下部的图标代表的三个操作分别为：访问Vscode容器编写代码、访问终端操作集群、删除集群。
+1. 集群创建成功后，概况页面由两个卡片组成。上面为集群的基本信息和对集群的基本操作。卡片下部的图标代表的三个操作分别为：访问Vscode、访问SSH终端、删除集群。
 ![Cluster Overview](../images/cluster-overview.png "集群概况和基本操作")
 
 2. 下面的卡片显示集群的端口映射信息，点击<font color="blue">“访问”</font>可以在新的窗口中访问各个端口对应的Web UI，包括Hadoop/Spark Web UI、Vscode、Jupyter Notebook等。
@@ -30,9 +29,9 @@
 ### 集群操作
 
 1. 打开Vscode
-![Open Vscode](../images/vscode1.png "Vscode Server")
+![Open Vscode](../images/vscode.png "Vscode Server")
 
-2. 打开Terminal
+2. 打开SSH终端
 ![Open Terminal](../images/terminal.png "Web SSH终端")
 
 3. 删除集群
