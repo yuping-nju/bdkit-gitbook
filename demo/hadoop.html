@@ -350,7 +350,38 @@
                                 
                                 <html><head></head><body><div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#hadoop-mapreduce-demo"><b></b>Hadoop MapReduce Demo</a></li></ul></div><a href="#hadoop-mapreduce-demo" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="hadoop-mapreduce-demo"><a name="hadoop-mapreduce-demo" class="anchor-navigation-ex-anchor" href="#hadoop-mapreduce-demo"><i class="fa fa-link" aria-hidden="true"></i></a>Hadoop MapReduce Demo</h1>
 <ul>
-<li>&#x7F16;&#x5199;Word Count&#x4EE3;&#x7801;</li>
+<li><p>&#x521B;&#x5EFA;Maven&#x9879;&#x76EE; (&#x63A8;&#x8350;&#x5728;Vscode&#x91CC;&#x7528;Maven&#x7BA1;&#x7406;Java&#x9879;&#x76EE;) </p>
+<ul>
+<li>pom.xml&#x7247;&#x6BB5;&#xFF0C;&#x6DFB;&#x52A0;&#x76F8;&#x5173;&#x4F9D;&#x8D56;&#x5305;&#xFF08;<strong>&#x7248;&#x672C;&#x4EC5;&#x4F9B;&#x53C2;&#x8003;</strong>&#xFF09;</li>
+</ul>
+</li>
+</ul>
+<pre><code class="lang-xml">    <span class="hljs-comment">&lt;!-- https://mvnrepository.com/artifact/commonslogging/commons-logging --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>commons-logging<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>commons-logging<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.1.3<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-common --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.hadoop<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>hadoop-common<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.7.4<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.hadoop<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>hadoop-hdfs<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.7.4<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-client --&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.hadoop<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>hadoop-client<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.7.4<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span>
+</code></pre>
+<ul>
+<li>&#x7F16;&#x5199;Word Count&#x4EE3;&#x7801; </li>
 </ul>
 <pre><code class="lang-java"><span class="hljs-keyword">import</span> java.io.IOException;
 <span class="hljs-keyword">import</span> java.util.StringTokenizer;
@@ -424,12 +455,11 @@
 }
 </code></pre>
 <ul>
-<li>&#x7F16;&#x8BD1;&#x4EE3;&#x7801;&#xFF0C;&#x6253;&#x5305;&#x4E3A;Jar</li>
+<li>&#x6267;&#x884C;mvn package&#xFF0C;&#x7F16;&#x8BD1;&#x5E76;&#x6253;&#x5305;</li>
 </ul>
-<pre><code>$ javac -classpath %CLASSPATH% WordCount.java
-$ jar cf wc.jar WordCount*.class
+<pre><code>$ mvn package
 </code></pre><ul>
-<li>&#x521B;&#x5EFA;&#x672C;&#x5730;&#x6587;&#x4EF6;HDFS</li>
+<li>&#x521B;&#x5EFA;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x7528;&#x4E8E;&#x6D4B;&#x8BD5;</li>
 </ul>
 <pre><code>$ mkdir input
 $ echo &quot;Hello Docker&quot; &gt;input/file2.txt
@@ -442,7 +472,7 @@ $ hdfs dfs -put ./input/* input
 </code></pre><ul>
 <li>&#x8FD0;&#x884C;Word Count&#x7A0B;&#x5E8F;</li>
 </ul>
-<pre><code>$ hadoop jar wc.jar WordCount input output
+<pre><code>$ hadoop jar target/wordcount-1.0.jar WordCount input output
 </code></pre><ul>
 <li>&#x67E5;&#x770B;&#x8F93;&#x51FA;</li>
 </ul>
@@ -450,9 +480,9 @@ $ hdfs dfs -put ./input/* input
 Docker  1
 Hadoop  1
 Hello   2
-</code></pre><p><a href="../images/hadoop-mr-out.png" data-lightbox="e25f9874-31e0-463f-bca4-6dd6802c830a" data-title="MapReduce Output"><img src="../images/hadoop-mr-out.png" alt="MapReduce Output"></a></p>
+</code></pre><p><a href="../images/vscode-mr-java4.png" data-lightbox="a07a7489-4ecf-4219-8313-88ddee758247" data-title="MapReduce Output"><img src="../images/vscode-mr-java4.png" alt="MapReduce Output"></a></p>
 <footer class="page-footer"><span class="copyright">Copyright ICS@NJU all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
-2020-04-10 23:12:18
+2020-05-01 20:27:25
 </span></footer></body></html>
                                 
                                 </section>
@@ -496,7 +526,7 @@ Hello   2
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Hadoop","level":"1.4.1","depth":2,"next":{"title":"Spark","level":"1.4.2","depth":2,"path":"demo/spark.md","ref":"demo/spark.md","articles":[]},"previous":{"title":"Demo","level":"1.4","depth":1,"path":"demo/README.md","ref":"demo/README.md","articles":[{"title":"Hadoop","level":"1.4.1","depth":2,"path":"demo/hadoop.md","ref":"demo/hadoop.md","articles":[]},{"title":"Spark","level":"1.4.2","depth":2,"path":"demo/spark.md","ref":"demo/spark.md","articles":[]},{"title":"Hive","level":"1.4.3","depth":2,"path":"demo/hive.md","ref":"demo/hive.md","articles":[]},{"title":"HBase","level":"1.4.4","depth":2,"path":"demo/hbase.md","ref":"demo/hbase.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","theme-comscore","lightbox","-sharing","sharing-plus","anchor-navigation-ex","tbfed-pagefooter","code","hide-element","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright ICS@NJU","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"livereload":{},"search":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"printLog":false,"showGoTop":true,"showLevel":false},"lightbox":{"jquery":true,"sameUuid":false},"theme-comscore":{},"sharing":{"qq":false,"all":["facebook","google","twitter","weibo"],"douban":false,"facebook":false,"weibo":true,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":false,"messenger":false,"line":false,"vk":false,"pocket":false,"google":false,"viber":false,"stumbleupon":false,"qzone":true,"linkedin":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","author":"Copyright ICS@NJU","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"BDKit GitBook","links":{"sidebar":{"BDKit Homepage":"http://ics.nju.edu.cn/bdkit"}},"gitbook":"*","description":"BDKit GitBook","extension":null},"file":{"path":"demo/hadoop.md","mtime":"2020-04-10T15:12:18.009Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-04-18T13:37:55.212Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Hadoop","level":"1.4.1","depth":2,"next":{"title":"Spark","level":"1.4.2","depth":2,"path":"demo/spark.md","ref":"demo/spark.md","articles":[]},"previous":{"title":"Demo","level":"1.4","depth":1,"path":"demo/README.md","ref":"demo/README.md","articles":[{"title":"Hadoop","level":"1.4.1","depth":2,"path":"demo/hadoop.md","ref":"demo/hadoop.md","articles":[]},{"title":"Spark","level":"1.4.2","depth":2,"path":"demo/spark.md","ref":"demo/spark.md","articles":[]},{"title":"Hive","level":"1.4.3","depth":2,"path":"demo/hive.md","ref":"demo/hive.md","articles":[]},{"title":"HBase","level":"1.4.4","depth":2,"path":"demo/hbase.md","ref":"demo/hbase.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","theme-comscore","lightbox","-sharing","sharing-plus","anchor-navigation-ex","tbfed-pagefooter","code","hide-element","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright ICS@NJU","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"livereload":{},"search":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"printLog":false,"showGoTop":true,"showLevel":false},"lightbox":{"jquery":true,"sameUuid":false},"theme-comscore":{},"sharing":{"qq":false,"all":["facebook","google","twitter","weibo"],"douban":false,"facebook":false,"weibo":true,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":false,"messenger":false,"line":false,"vk":false,"pocket":false,"google":false,"viber":false,"stumbleupon":false,"qzone":true,"linkedin":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","author":"Copyright ICS@NJU","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"BDKit GitBook","links":{"sidebar":{"BDKit Homepage":"http://ics.nju.edu.cn/bdkit"}},"gitbook":"*","description":"BDKit GitBook","extension":null},"file":{"path":"demo/hadoop.md","mtime":"2020-05-01T12:27:25.069Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-01T10:08:12.915Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
