@@ -198,6 +198,8 @@ object ScalaWordCount {
 $ sbt package
 ```
 ![sbt package](../images/vscode-spark-scala3.png "sbt package")
+![sbt package](../images/vscode-spark-scala4.png "sbt package")
+
 
 - 提交到集群运行Word Count程序
 ```
