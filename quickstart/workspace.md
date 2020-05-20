@@ -16,9 +16,10 @@
 ![Image Configuration](../images/cluster-config2.png "配置集群")
 ![Image Configuration](../images/cluster-config3.png "配置集群")
 
-4. 创建后页面显示集群基本情况。集群Status为“等待中”表示正在创建，创建成功后Status为“就绪”（<font color="red">注意：需要点击圆形的“刷新”按钮主动刷新</font>）。
+4. 创建后页面显示集群基本情况。集群Status为“等待中”表示正在创建，创建成功后Status为“就绪”，如果发生错误（仓库不存在，用户名或密码输错等）则会在上方显示集群创建失败信息（<font color="red">注意：需要点击圆形的“刷新”按钮主动刷新</font>）。
 ![Cluster Waiting](../images/cluster-waiting.png "集群正在创建")
 ![Cluster Ready](../images/cluster-ready.png "集群创建成功")
+![Cluster Error](../images/cluster-error.png "集群创建失败")
 
 ### 集群概况
 
