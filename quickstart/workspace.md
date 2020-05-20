@@ -11,12 +11,12 @@
 2. 用户选择其中一个镜像。
 ![Select Image](../images/image-sel.png "选择镜像")
 
-3. 在对话框中对集群进行配置。slave节点数、Git仓库地址、数据集均为必填项。Git仓库属性默认为Public，若仓库访问权限是Private则需要进一步输入用户名和密码。数据集可从共享区的数据集中选择，点击输入框后出现下拉框，目前可以选择供实验用的dataset1。（<font color="red">注意：截图中的Git仓库地址仅为展示，实际不可用，请输入自己的Github和其它公网的Git仓库地址</font>）
+3. 在对话框中对集群进行配置。slave节点数、Git仓库地址、数据集均为必填项。Git仓库属性默认为Public，若仓库访问权限是Private则需要进一步输入用户名和密码。数据集可从共享区的数据集中选择，点击输入框后出现下拉框，目前可以选择供实验用的dataset1。（<font color="red">注意：截图中的Git仓库地址仅为展示，实际不可用，请输入自己的Github或者其它公网的Git仓库地址</font>）
 ![Image Configuration](../images/cluster-config1.png "配置集群")
 ![Image Configuration](../images/cluster-config2.png "配置集群")
 ![Image Configuration](../images/cluster-config3.png "配置集群")
 
-4. 创建后页面显示集群基本情况。集群Status为“等待中”表示正在创建，创建成功后Status为“就绪”，如果发生错误（仓库不存在，用户名或密码输错等）则会在上方显示集群创建失败信息（<font color="red">注意：需要点击圆形的“刷新”按钮主动刷新</font>）。
+4. 创建后页面显示集群基本情况。集群Status为“等待中”表示正在创建，创建成功后Status为“就绪”，如果发生错误（例如仓库不存在，用户名或密码错误等）则会在上方显示集群创建失败信息（<font color="red">注意：需要点击圆形的“刷新”按钮主动刷新</font>）。
 ![Cluster Waiting](../images/cluster-waiting.png "集群正在创建")
 ![Cluster Ready](../images/cluster-ready.png "集群创建成功")
 ![Cluster Error](../images/cluster-error.png "集群创建失败")
