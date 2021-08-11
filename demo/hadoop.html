@@ -109,7 +109,7 @@
     
         
         <li>
-            <a href="http://ics.nju.edu.cn/bdkit" target="_blank" class="custom-link">BDKit Homepage</a>
+            <a href="http://bdkit.cn:30080" target="_blank" class="custom-link">BDKit Homepage</a>
         </li>
     
     
@@ -348,7 +348,7 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <html><head></head><body><div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#hadoop-mapreduce-demo"><b></b>Hadoop MapReduce Demo</a></li></ul></div><a href="#hadoop-mapreduce-demo" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="hadoop-mapreduce-demo"><a name="hadoop-mapreduce-demo" class="anchor-navigation-ex-anchor" href="#hadoop-mapreduce-demo"><i class="fa fa-link" aria-hidden="true"></i></a>Hadoop MapReduce Demo</h1>
+                                <html><head></head><body><div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon fa fa-hand-o-right"></span><a href="#hadoop-mapreduce-demo-java"><b></b>Hadoop MapReduce Demo (Java)</a></li><li><span class="title-icon fa fa-hand-o-right"></span><a href="#hadoop-mapreduce-demo-python"><b></b>Hadoop MapReduce Demo (Python)</a></li></ul></div><a href="#hadoop-mapreduce-demo-java" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="hadoop-mapreduce-demo-java"><a name="hadoop-mapreduce-demo-java" class="anchor-navigation-ex-anchor" href="#hadoop-mapreduce-demo-java"><i class="fa fa-link" aria-hidden="true"></i></a>Hadoop MapReduce Demo (Java)</h1>
 <ul>
 <li><p>&#x521B;&#x5EFA;Maven&#x9879;&#x76EE; (&#x63A8;&#x8350;&#x5728;Vscode&#x91CC;&#x7528;Maven&#x7BA1;&#x7406;Java&#x9879;&#x76EE;) </p>
 <ul>
@@ -480,9 +480,114 @@ $ hdfs dfs -put ./input/* input
 Docker  1
 Hadoop  1
 Hello   2
-</code></pre><p><a href="../images/vscode-mr-java4.png" data-lightbox="9e7b2944-080b-4b6b-8343-e72c2dfd2b25" data-title="MapReduce Output"><img src="../images/vscode-mr-java4.png" alt="MapReduce Output"></a></p>
+</code></pre><p><a href="../images/vscode-mr-java4.png" data-lightbox="2912d02f-e00e-4c8e-af97-06fa66aabb69" data-title="MapReduce Output"><img src="../images/vscode-mr-java4.png" alt="MapReduce Output"></a></p>
+<h1 id="hadoop-mapreduce-demo-python"><a name="hadoop-mapreduce-demo-python" class="anchor-navigation-ex-anchor" href="#hadoop-mapreduce-demo-python"><i class="fa fa-link" aria-hidden="true"></i></a>Hadoop MapReduce Demo (Python)</h1>
+<ul>
+<li><p>&#x539F;&#x7406;&#xFF1A;Hadoop Streaming&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x4FBF;&#x4E8E;&#x8FDB;&#x884C;MapReduce&#x7F16;&#x7A0B;&#x7684;&#x5DE5;&#x5177;&#x5305;&#xFF0C;&#x4F7F;&#x7528;&#x5B83;&#x53EF;&#x4EE5;&#x57FA;&#x4E8E;&#x4E00;&#x4E9B;&#x53EF;&#x6267;&#x884C;&#x547D;&#x4EE4;&#x3001;&#x811A;&#x672C;&#x8BED;&#x8A00;&#x6216;&#x5176;&#x4ED6;&#x7F16;&#x7A0B;&#x8BED;&#x8A00;&#x6765;&#x5B9E;&#x73B0;Mapper&#x548C; Reducer&#xFF0C;&#x4ECE;&#x800C;&#x5145;&#x5206;&#x5229;&#x7528;Hadoop&#x5E76;&#x884C;&#x8BA1;&#x7B97;&#x6846;&#x67B6;&#x7684;&#x4F18;&#x52BF;&#x548C;&#x80FD;&#x529B;&#xFF0C;&#x6765;&#x5904;&#x7406;&#x5927;&#x6570;&#x636E;&#x3002;Hadoop Streaming&#x8D1F;&#x8D23;&#x4ECE;&#x6807;&#x51C6;&#x8F93;&#x5165;&#x4F9D;&#x6B21;&#x8BFB;&#x53D6;&#x6587;&#x4EF6;&#x7684;&#x6BCF;&#x4E00;&#x884C;&#xFF0C;&#x6267;&#x884C;&#x51FD;&#x6570;&#xFF0C;&#x628A;&#x6807;&#x51C6;&#x8F93;&#x51FA;&#x8F6C;&#x5316;&#x6210;key-value&#x5BF9;&#x6216;&#x8005;key-null&#x5BF9;&#x3002;</p>
+</li>
+<li><p>&#x7F16;&#x5199;Word Count&#x4EE3;&#x7801;&#xFF08;mapper.py&#xFF09;</p>
+</li>
+</ul>
+<pre><code class="lang-python"><span class="hljs-comment">#!/usr/bin/env python</span>
+
+<span class="hljs-keyword">import</span> sys
+
+<span class="hljs-comment"># input comes from STDIN (standard input)</span>
+<span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> sys.stdin:
+    <span class="hljs-comment"># remove leading and trailing whitespace</span>
+    line = line.strip()
+    <span class="hljs-comment"># split the line into words</span>
+    words = line.split()
+    <span class="hljs-comment"># increase counters</span>
+    <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> words:
+        <span class="hljs-comment"># write the results to STDOUT (standard output);</span>
+        <span class="hljs-comment"># what we output here will be the input for the</span>
+        <span class="hljs-comment"># Reduce step, i.e. the input for reducer.py</span>
+        <span class="hljs-comment">#</span>
+        <span class="hljs-comment"># tab-delimited; the trivial word count is 1</span>
+        <span class="hljs-keyword">print</span> <span class="hljs-string">&apos;%s\t%s&apos;</span> % (word, <span class="hljs-number">1</span>)
+</code></pre>
+<ul>
+<li>&#x7F16;&#x5199;Word Count&#x4EE3;&#x7801;&#xFF08;reducer.py&#xFF09;</li>
+</ul>
+<pre><code class="lang-python"><span class="hljs-comment">#!/usr/bin/env python</span>
+
+<span class="hljs-keyword">from</span> operator <span class="hljs-keyword">import</span> itemgetter
+<span class="hljs-keyword">import</span> sys
+
+current_word = <span class="hljs-keyword">None</span>
+current_count = <span class="hljs-number">0</span>
+word = <span class="hljs-keyword">None</span>
+
+<span class="hljs-comment"># input comes from STDIN</span>
+<span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> sys.stdin:
+    <span class="hljs-comment"># remove leading and trailing whitespace</span>
+    line = line.strip()
+
+    <span class="hljs-comment"># parse the input we got from mapper.py</span>
+    word, count = line.split(<span class="hljs-string">&apos;\t&apos;</span>, <span class="hljs-number">1</span>)
+
+    <span class="hljs-comment"># convert count (currently a string) to int</span>
+    <span class="hljs-keyword">try</span>:
+        count = int(count)
+    <span class="hljs-keyword">except</span> ValueError:
+        <span class="hljs-comment"># count was not a number, so silently</span>
+        <span class="hljs-comment"># ignore/discard this line</span>
+        <span class="hljs-keyword">continue</span>
+
+    <span class="hljs-comment"># this IF-switch only works because Hadoop sorts map output</span>
+    <span class="hljs-comment"># by key (here: word) before it is passed to the reducer</span>
+    <span class="hljs-keyword">if</span> current_word == word:
+        current_count += count
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">if</span> current_word:
+            <span class="hljs-comment"># write result to STDOUT</span>
+            <span class="hljs-keyword">print</span> <span class="hljs-string">&apos;%s\t%s&apos;</span> % (current_word, current_count)
+        current_count = count
+        current_word = word
+
+<span class="hljs-comment"># do not forget to output the last word if needed!</span>
+<span class="hljs-keyword">if</span> current_word == word:
+    <span class="hljs-keyword">print</span> <span class="hljs-string">&apos;%s\t%s&apos;</span> % (current_word, current_count)
+</code></pre>
+<ul>
+<li>&#x4E0A;&#x4F20;&#x672C;&#x5730;&#x6587;&#x4EF6;&#x5230;HDFS</li>
+</ul>
+<pre><code>$ hadoop fs -mkdir -p input
+$ hdfs dfs -put ./input/wordcount_data.txt input
+</code></pre><ul>
+<li>&#x8FD0;&#x884C;Word Count&#x7A0B;&#x5E8F;</li>
+</ul>
+<pre><code>$ hadoop jar /usr/local/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.7.7.jar \
+&gt; -D stream.non.zero.exit.is.failure=false \
+&gt; -D mapreduce.job.name=python_wc \
+&gt; -files  mapper.py,reducer.py \
+&gt; -mapper  mapper.py \
+&gt; -reducer reducer.py \
+&gt; -input input/wordcount_data.txt \
+&gt; -output output
+</code></pre><ul>
+<li>&#x67E5;&#x770B;&#x8F93;&#x51FA;</li>
+</ul>
+<pre><code>$ hadoop fs -cat output/part-r-00000
+Bye     1
+Goodbye 1
+Hadoop! 1
+Hadoop, 1
+Hbase,  1
+Hello   4
+Hive    1
+Java    1
+Python  1
+Scala   1
+Spark   1
+World!  1
+World,  1
+hello   1
+to      1
+</code></pre><p><a href="../images/vscode-mr-py.png" data-lightbox="7d8b2968-6918-44dc-8cbc-aeae969a92f1" data-title="MapReduce Python"><img src="../images/vscode-mr-py.png" alt="MapReduce Python"></a> </p>
 <footer class="page-footer"><span class="copyright">Copyright ICS@NJU all right reserved&#xFF0C;powered by Gitbook</span><span class="footer-modification">&#x8BE5;&#x6587;&#x4EF6;&#x4FEE;&#x8BA2;&#x65F6;&#x95F4;&#xFF1A;
-2020-05-12 21:57:06
+2021-08-11 16:20:08
 </span></footer></body></html>
                                 
                                 </section>
@@ -526,7 +631,7 @@ Hello   2
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Hadoop","level":"1.4.1","depth":2,"next":{"title":"Spark","level":"1.4.2","depth":2,"path":"demo/spark.md","ref":"demo/spark.md","articles":[]},"previous":{"title":"Demo","level":"1.4","depth":1,"path":"demo/README.md","ref":"demo/README.md","articles":[{"title":"Hadoop","level":"1.4.1","depth":2,"path":"demo/hadoop.md","ref":"demo/hadoop.md","articles":[]},{"title":"Spark","level":"1.4.2","depth":2,"path":"demo/spark.md","ref":"demo/spark.md","articles":[]},{"title":"Hive","level":"1.4.3","depth":2,"path":"demo/hive.md","ref":"demo/hive.md","articles":[]},{"title":"HBase","level":"1.4.4","depth":2,"path":"demo/hbase.md","ref":"demo/hbase.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","theme-comscore","lightbox","-sharing","sharing-plus","anchor-navigation-ex","tbfed-pagefooter","code","hide-element","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright ICS@NJU","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"livereload":{},"search":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"printLog":false,"showGoTop":true,"showLevel":false},"lightbox":{"jquery":true,"sameUuid":false},"theme-comscore":{},"sharing":{"qq":false,"all":["facebook","google","twitter","weibo"],"douban":false,"facebook":false,"weibo":true,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":false,"messenger":false,"line":false,"vk":false,"pocket":false,"google":false,"viber":false,"stumbleupon":false,"qzone":true,"linkedin":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","author":"Copyright ICS@NJU","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"BDKit GitBook","links":{"sidebar":{"BDKit Homepage":"http://ics.nju.edu.cn/bdkit"}},"gitbook":"*","description":"BDKit GitBook","extension":null},"file":{"path":"demo/hadoop.md","mtime":"2020-05-12T13:57:06.561Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2020-05-20T13:09:01.095Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"Hadoop","level":"1.4.1","depth":2,"next":{"title":"Spark","level":"1.4.2","depth":2,"path":"demo/spark.md","ref":"demo/spark.md","articles":[]},"previous":{"title":"Demo","level":"1.4","depth":1,"path":"demo/README.md","ref":"demo/README.md","articles":[{"title":"Hadoop","level":"1.4.1","depth":2,"path":"demo/hadoop.md","ref":"demo/hadoop.md","articles":[]},{"title":"Spark","level":"1.4.2","depth":2,"path":"demo/spark.md","ref":"demo/spark.md","articles":[]},{"title":"Hive","level":"1.4.3","depth":2,"path":"demo/hive.md","ref":"demo/hive.md","articles":[]},{"title":"HBase","level":"1.4.4","depth":2,"path":"demo/hbase.md","ref":"demo/hbase.md","articles":[]}]},"dir":"ltr"},"config":{"plugins":["expandable-chapters","theme-comscore","lightbox","-sharing","sharing-plus","anchor-navigation-ex","tbfed-pagefooter","code","hide-element","livereload"],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright ICS@NJU","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"livereload":{},"search":{},"sharing-plus":{"qq":false,"all":["facebook","google","twitter","instapaper","linkedin","pocket","stumbleupon"],"douban":false,"facebook":true,"weibo":false,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":true,"messenger":false,"line":false,"vk":false,"pocket":true,"google":false,"viber":false,"stumbleupon":false,"qzone":false,"linkedin":false},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"code":{"copyButtons":true},"hide-element":{"elements":[".gitbook-link"]},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"associatedWithSummary":true,"float":{"floatIcon":"fa fa-navicon","level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"mode":"float","multipleH1":true,"pageTop":{"level1Icon":"fa fa-hand-o-right","level2Icon":"fa fa-hand-o-right","level3Icon":"fa fa-hand-o-right","showLevelIcon":true},"printLog":false,"showGoTop":true,"showLevel":false},"lightbox":{"jquery":true,"sameUuid":false},"theme-comscore":{},"sharing":{"qq":false,"all":["facebook","google","twitter","weibo"],"douban":false,"facebook":false,"weibo":true,"instapaper":false,"whatsapp":false,"hatenaBookmark":false,"twitter":false,"messenger":false,"line":false,"vk":false,"pocket":false,"google":false,"viber":false,"stumbleupon":false,"qzone":true,"linkedin":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false},"expandable-chapters":{}},"theme":"default","author":"Copyright ICS@NJU","pdf":{"pageBreaksBefore":"/","headerTemplate":null,"paperSize":"a4","margin":{"right":62,"left":62,"top":36,"bottom":36},"fontSize":12,"fontFamily":"Arial","footerTemplate":null,"chapterMark":"pagebreak","pageNumbers":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"isbn":"","variables":{},"title":"BDKit GitBook","links":{"sidebar":{"BDKit Homepage":"http://bdkit.cn:30080"}},"gitbook":"*","description":"BDKit GitBook","extension":null},"file":{"path":"demo/hadoop.md","mtime":"2021-08-11T08:20:08.707Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2021-08-11T08:10:57.004Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>
