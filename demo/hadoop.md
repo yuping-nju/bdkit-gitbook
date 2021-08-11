@@ -149,11 +149,7 @@ Hello   2
 
 - 原理：Hadoop Streaming提供了一个便于进行MapReduce编程的工具包，使用它可以基于一些可执行命令、脚本语言或其他编程语言来实现Mapper和 Reducer，从而充分利用Hadoop并行计算框架的优势和能力，来处理大数据。Hadoop Streaming负责从标准输入依次读取文件的每一行，执行函数，把标准输出转化成key-value对或者key-null对。
 
-  
-
-- 编写Word Count代码
-
-### mapper.py
+- 编写Word Count代码（mapper.py）
 
 ```python
 #!/usr/bin/env python
@@ -176,7 +172,7 @@ for line in sys.stdin:
         print '%s\t%s' % (word, 1)
 ```
 
-###  reducer.py
+- 编写Word Count代码（reducer.py）
 
 ```python
 #!/usr/bin/env python
