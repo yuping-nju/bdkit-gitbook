@@ -1,4 +1,4 @@
-# Hadoop MapReduce Demo
+# Hadoop MapReduce Demo (Java)
 
 - 创建Maven项目 (推荐在Vscode里用Maven管理Java项目) 
 
@@ -143,3 +143,122 @@ Hadoop  1
 Hello   2
 ```
 ![MapReduce Output](../images/vscode-mr-java4.png "查看输出")
+
+
+# Hadoop MapReduce Demo (Python)
+
+- 原理：Hadoop Streaming提供了一个便于进行MapReduce编程的工具包，使用它可以基于一些可执行命令、脚本语言或其他编程语言来实现Mapper和 Reducer，从而充分利用Hadoop并行计算框架的优势和能力，来处理大数据。Hadoop Streaming负责从标准输入依次读取文件的每一行，执行函数，把标准输出转化成key-value对或者key-null对。
+
+  
+
+- 编写Word Count代码
+
+### mapper.py
+
+```python
+#!/usr/bin/env python
+ 
+import sys
+ 
+# input comes from STDIN (standard input)
+for line in sys.stdin:
+    # remove leading and trailing whitespace
+    line = line.strip()
+    # split the line into words
+    words = line.split()
+    # increase counters
+    for word in words:
+        # write the results to STDOUT (standard output);
+        # what we output here will be the input for the
+        # Reduce step, i.e. the input for reducer.py
+        #
+        # tab-delimited; the trivial word count is 1
+        print '%s\t%s' % (word, 1)
+```
+
+###  reducer.py
+
+```python
+#!/usr/bin/env python
+ 
+from operator import itemgetter
+import sys
+ 
+current_word = None
+current_count = 0
+word = None
+ 
+# input comes from STDIN
+for line in sys.stdin:
+    # remove leading and trailing whitespace
+    line = line.strip()
+ 
+    # parse the input we got from mapper.py
+    word, count = line.split('\t', 1)
+ 
+    # convert count (currently a string) to int
+    try:
+        count = int(count)
+    except ValueError:
+        # count was not a number, so silently
+        # ignore/discard this line
+        continue
+ 
+    # this IF-switch only works because Hadoop sorts map output
+    # by key (here: word) before it is passed to the reducer
+    if current_word == word:
+        current_count += count
+    else:
+        if current_word:
+            # write result to STDOUT
+            print '%s\t%s' % (current_word, current_count)
+        current_count = count
+        current_word = word
+ 
+# do not forget to output the last word if needed!
+if current_word == word:
+    print '%s\t%s' % (current_word, current_count)
+```
+
+- 上传本地文件到HDFS
+
+```
+$ hadoop fs -mkdir -p input
+$ hdfs dfs -put ./input/wordcount_data.txt input
+```
+
+
+- 运行Word Count程序
+
+```
+$ hadoop jar /usr/local/hadoop/share/hadoop/tools/lib/hadoop-streaming-2.7.7.jar \
+> -D stream.non.zero.exit.is.failure=false \
+> -D mapreduce.job.name=python_wc \
+> -files  mapper.py,reducer.py \
+> -mapper  mapper.py \
+> -reducer reducer.py \
+> -input input/wordcount_data.txt \
+> -output output
+```
+
+- 查看输出
+
+```
+$ hadoop fs -cat output/part-r-00000
+Bye     1
+Goodbye 1
+Hadoop! 1
+Hadoop, 1
+Hbase,  1
+Hello   4
+Hive    1
+Java    1
+Python  1
+Scala   1
+Spark   1
+World!  1
+World,  1
+hello   1
+to      1
+```
+![MapReduce Python](../images/vscode-mr-py.png "运行截图")
